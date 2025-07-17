@@ -26,4 +26,10 @@ class PostController extends Controller
         return view('post.show',compact(['post','comments']));
     }
 
+    public function myPosts()
+    {
+        $posts = Post::where('user_id', auth()->id())->get();
+        return view('post.my-posts', compact('posts'));
+    }
+
 }

@@ -58,7 +58,7 @@
                             @endif
                         @else
                         <li class="nav-item">
-                            <a href="{{ route('post.index') }}" class="nav-link {{ request()->is('account/images*') ? 'active' : '' }}">پست های من</a></li>
+                            <a href="{{ route('post.index') }}" class="nav-link {{ request()->is('my-posts*') ? 'active' : '' }}">پست های من</a></li>
                         </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
