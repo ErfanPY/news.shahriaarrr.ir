@@ -53,6 +53,20 @@ class DatabaseSeeder extends Seeder
             mkdir(dirname($fullPath), 0755, true);
         }
         
+        // Persian cat-related news titles
+        $catNewsTitles = [
+            'گربه‌ای که از آتش‌سوزی جان سالم به در برد',
+            'رکورد جدید گربه در پرش ارتفاع',
+            'گربه درمانگر در بیمارستان کودکان',
+            'کشف گونه جدید گربه در جنگل‌های شمال',
+            'گربه‌ای که صاحبش را از سقوط نجات داد',
+            'راه‌اندازی پناهگاه جدید برای گربه‌های بی‌خانمان',
+            'گربه‌ای که ۲۰ سال عمر کرد',
+            'گربه‌های معروف اینستاگرام',
+            'گربه‌ای که پیانو می‌نوازد',
+            'راهنمای نگهداری از گربه برای مبتدیان'
+        ];
+        
         for($i=0;$i<10;$i++){
             $uniqueImagePath = 'form-attachments/cat-image-' . $i . '.jpg';
             $uniqueFullPath = public_path($uniqueImagePath);
@@ -62,7 +76,7 @@ class DatabaseSeeder extends Seeder
             }
             
             Post::create([
-                'name' => 'name',
+                'name' => $catNewsTitles[$i],
                 'body' => $body,
                 'category_id' => rand(1,5),
                 'user_id' => rand(1,5),

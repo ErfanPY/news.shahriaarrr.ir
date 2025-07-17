@@ -7,13 +7,15 @@
             <div class="row">
                 @foreach ( $cat as $post )
                 <div class="col-md-3 mb-4">
-                    <div class="card product-card h-100">
-                        <img src="{{ $post->url }}" class="card-img-top" alt="محصول">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$post->name}} </h5>
-                            <p class="card-text text-muted">توضیحات کوتاه خبر</p>
+                    <a href="{{ route('post.show', $post->id) }}" class="text-decoration-none">
+                        <div class="card product-card h-100">
+                            <img src="{{ $post->url }}" class="card-img-top" alt="محصول">
+                            <div class="card-body">
+                                <h5 class="card-title">{{$post->name}} </h5>
+                                <p class="card-text text-muted">توضیحات کوتاه خبر</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 @endforeach
 
