@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function show( $id){
-        $category = Category::find($id);
-        $posts = $category->posts()->where('status','don')->get();
+    public function show($id){
+        $category = Category::findOrFail($id);
+        $posts = $category->posts()->where('status', 'done')->get();
         $name = $category->name;
-        // dd($category);
-        return view('cat.show',compact(['posts','name']));
+        return view('cat.show', compact(['posts', 'name']));
     }
 }
