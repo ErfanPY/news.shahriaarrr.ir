@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="image-container">
-                    <img src="{{ $post->url }}" class="img-fluid" />
+                    <img src="/{{ $post->url }}" class="img-fluid" />
                 </div>
                 <div>
                     <h1>{{$post->name}}</h1>
