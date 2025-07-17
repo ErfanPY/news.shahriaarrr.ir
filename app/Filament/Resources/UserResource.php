@@ -43,11 +43,11 @@ class UserResource extends Resource
 
                 TextInput::make('name'),
                 TextInput::make('email'),
-                Select::make('role')->options(['user','author','admin'])->disabled(
-                    function(){
-                    return auth()->user()->role != 'admin';
-                }
-                ),
+                Select::make('role')
+                    ->options(['user','author','admin'])
+                    ->visible(function(){
+                        return auth()->user()->role === 'admin';
+                    }),
             ]);
     }
 
