@@ -17,7 +17,7 @@ class ListPosts extends ListRecords
         ];
     }
 
-    protected function getTableQuery()
+    protected function getTableQuery(): ?\Illuminate\Database\Eloquent\Builder
     {
         $query = parent::getTableQuery();
         
