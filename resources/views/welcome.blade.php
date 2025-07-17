@@ -8,7 +8,7 @@
                 @foreach ( $cat as $post )
                 <div class="col-md-3 mb-4">
                     <div class="card product-card h-100">
-                        <img src="https://placehold.co/400" class="card-img-top" alt="محصول">
+                        <img src="{{ $post->url }}" class="card-img-top" alt="محصول">
                         <div class="card-body">
                             <h5 class="card-title">{{$post->name}} </h5>
                             <p class="card-text text-muted">توضیحات کوتاه خبر</p>
