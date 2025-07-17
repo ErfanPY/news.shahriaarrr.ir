@@ -115,21 +115,34 @@ class UserResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->role === 'admin';
+        return true; // All users can view users list
     }
 
     public static function canCreate(): bool
     {
-        return auth()->user()->role === 'admin';
+        return auth()->user()->role === 'admin'; // Only admins can create users
     }
 
     public static function canEdit(Model $record): bool
     {
-        return auth()->user()->role === 'admin';
+        // Users can edit their own profile, admins can edit all
+        return auth()->user()->role === 'admin' || $record->id === auth()->id();
     }
 
     public static function canDelete(Model $record): bool
     {
-        return auth()->user()->role === 'admin';
+        return auth()->user()->role === 'admin'; // Only admins can delete users
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        
+        // If user is not admin, only show their own profile
+        if (auth()->user()->role !== 'admin') {
+            $query->where('id', auth()->id());
+        }
+        
+        return $query;
     }
 }

@@ -95,14 +95,7 @@ class PostResource extends Resource
     }
     public static function shouldRegisterNavigation(): bool
     {
-        return in_array(
-                User::find(auth()->id())->role,
-                [
-                    'admin',
-                    'author',
-                ]
-                );
-
+        return true; // All users can see the Posts resource in navigation
     }
 
     public static function canViewAny(): bool
