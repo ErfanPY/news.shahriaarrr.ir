@@ -19,10 +19,10 @@ Route::get('/', function () {
 
 Route::post('coment/{id}', [CommentController::class,'store'])->name('comments.store');
 
-Route::get('/',[PostController::class,'index'])->name('home');
 Route::get('/my-posts',[PostController::class,'myPosts'])->name('post.index');
 
 Route::group(['prefix' => '/post'],function(){
+    Route::get('/',[PostController::class,'index'])->name('post.index');
     Route::get('/show/{id}',[PostController::class,'show'])->name('post.show');
 });
 Route::group(['prefix' => '/cat'],function(){
