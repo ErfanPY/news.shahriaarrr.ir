@@ -33,8 +33,17 @@ class DatabaseSeeder extends Seeder
         ]);
         }
 
-        for($i=0;$i<5;$i++){
-            Category::create(['name' => 'دسته بندی'.$i]);
+        // Create 5 Persian news categories
+        $categories = [
+            'اخبار سیاسی',
+            'اخبار اقتصادی', 
+            'اخبار ورزشی',
+            'اخبار فناوری',
+            'اخبار فرهنگی'
+        ];
+        
+        foreach($categories as $categoryName) {
+            Category::create(['name' => $categoryName]);
         }
 
         $imagePath = 'form-attachments/cat-image.jpg';
