@@ -51,10 +51,10 @@ class DatabaseSeeder extends Seeder
         file_put_contents($fullPath, file_get_contents($catImageUrl));
 
         for($i=0;$i<30;$i++){
-            // Generate unique cat image for each post
+            // Download unique cat image for each post from placekittens.com
             $uniqueImagePath = 'form-attachments/cat-image-' . $i . '.jpg';
             $uniqueFullPath = storage_path('app/public/' . $uniqueImagePath);
-            $faker->image(dirname($uniqueFullPath), 400, 400, 'cats', false, true, basename($uniqueImagePath));
+            file_put_contents($uniqueFullPath, file_get_contents('https://www.placekittens.com/400/400'));
             
             Post::create([
                 'name' => 'name',
