@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="Bob Nouri-M" />
-    <title>{{ $title }} | Larapics</title>
+    <title>{{ $title }} | بهترین سایت خبری</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -27,7 +27,7 @@
             height="24"
             class="d-inline-block align-text-top color-light"/> --}}
 
-          Larapics
+          بهترین سایت خبری
         </a>
 
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -58,12 +58,7 @@
                             @endif
                         @else
                         <li class="nav-item">
-                            <a href="{{ route('post.index') }}" class="nav-link {{ request()->is('account/images*') ? 'active' : '' }}">My Photos</a></li>
-                        <li class="nav-item">
-                            <a href="{{ route('post.index') }}" class="nav-link {{ request()->is('account/favorites*') ? 'active' : '' }}">Favorites</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('post.index') }}" class="nav-link {{ request()->is('account/comments*') ? 'active' : '' }}">Comments</a>
+                            <a href="{{ route('post.index') }}" class="nav-link {{ request()->is('account/images*') ? 'active' : '' }}">پست های من</a></li>
                         </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -93,13 +88,8 @@
     <footer class="bg-light text-muted py-3 mt-5 border-top">
       <div class="container-fluid">
         <p class="float-end mb-1">
-          <a href="#" class="text-decoration-none">Back to top</a>
+          <a href="#" class="text-decoration-none">بازگشت به بالا</a>
         </p>
-        <p>
-          Larapics provides beautiful, high quality & royalty free photos shared
-          by creators everywhere.
-        </p>
-        <p>&copy; 2022 Larapics</p>
       </div>
     </footer>
 

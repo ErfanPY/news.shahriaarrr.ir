@@ -16,11 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $body =  'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, officiis quae. Saepe sed illo non beatae pariatur quod similique, ea, molestiae amet enim illum omnis mollitia eos quo, dolores fuga!';
-        // User::factory(10)->create();
+        $body =  'متن تستی آزمایشی بسیار طولانی و زیاد برای تست و بررسی نحوه نمایش';
 
         User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'مدیر سایت',
             'email' => 'admin@example.com',
             'password' => Hash::make('12345678'),
             'role' => 'admin',
@@ -28,14 +27,14 @@ class DatabaseSeeder extends Seeder
 
         for($i=0;$i<10;$i++){
             User::factory()->create([
-            'name' => 'Test User'.$i,
+            'name' => 'کاربر '.$i,
             'email' => $i.'user@example.com',
             'password' => Hash::make('12345678'),
         ]);
         }
 
         for($i=0;$i<5;$i++){
-            Category::create(['name' => 'cat'.$i]);
+            Category::create(['name' => 'دسته بندی'.$i]);
         }
 
         $imagePath = 'form-attachments/cat-image.jpg';
