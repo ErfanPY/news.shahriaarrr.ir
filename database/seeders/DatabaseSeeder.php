@@ -37,14 +37,32 @@ class DatabaseSeeder extends Seeder
         for($i=0;$i<10;$i++){
             Category::create(['name' => 'cat'.$i]);
         }
+        // Download a cat image from placekittens.com
+        $catImageUrl = 'https://www.placekittens.com/400/400';
+        $imagePath = 'form-attachments/cat-image.jpg';
+        $fullPath = storage_path('app/public/' . $imagePath);
+        
+        // Create directory if it doesn't exist
+        if (!file_exists(dirname($fullPath))) {
+            mkdir(dirname($fullPath), 0755, true);
+        }
+        
+        // Download the cat image from placekittens.com
+        file_put_contents($fullPath, file_get_contents($catImageUrl));
+
         for($i=0;$i<30;$i++){
+            // Generate unique cat image for each post
+            $uniqueImagePath = 'form-attachments/cat-image-' . $i . '.jpg';
+            $uniqueFullPath = storage_path('app/public/' . $uniqueImagePath);
+            $faker->image(dirname($uniqueFullPath), 400, 400, 'cats', false, true, basename($uniqueImagePath));
+            
             Post::create([
                 'name' => 'name',
                 'body' => $body,
                 'category_id' => rand(1,5),
                 'user_id' => rand(1,5),
                 'status' => 'done',
-                'url' => 'form-attachments/custom-prefix-20220829_192922.jpg'
+                'url' => $uniqueImagePath
             ]);
         }
 
