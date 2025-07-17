@@ -16,7 +16,7 @@
             <div class="col-sm-6 col-lg-4 mb-4">
                 <div class="card">
                     <a href="{{route('post.show',$post->id)}}">
-                        <img src="{{asset('storage'.'/'.$post->url)}}" alt="{{$post->title}}"
+                        <img src="/{{ $post->url }}" alt="{{$post->title}}"
                          height="100%"
                             class="card-img-top">
                     </a>
