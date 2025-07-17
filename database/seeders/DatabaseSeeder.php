@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $imagePath = 'form-attachments/cat-image.jpg';
-        $fullPath = storage_path('app/public/' . $imagePath);
+        $fullPath = public_path($imagePath);
         
         if (!file_exists(dirname($fullPath))) {
             mkdir(dirname($fullPath), 0755, true);
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         
         for($i=0;$i<10;$i++){
             $uniqueImagePath = 'form-attachments/cat-image-' . $i . '.jpg';
-            $uniqueFullPath = storage_path('app/public/' . $uniqueImagePath);
+            $uniqueFullPath = public_path($uniqueImagePath);
             
             echo "Downloading cat image for post " . ($i + 1) . "...\n";
             file_put_contents($uniqueFullPath, file_get_contents('https://www.placekittens.com/400/400'));
