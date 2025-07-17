@@ -6,6 +6,7 @@ use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
@@ -18,6 +19,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
@@ -31,7 +33,7 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name'),
+                TextInput::make('name')->required(),
                 FileUpload::make('url')->image()
                 ->getUploadedFileNameForStorageUsing(
                     fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
@@ -40,12 +42,16 @@ class PostResource extends Resource
                     ->disk('public')
                     ->directory('form-attachments')
                     ->visibility('public'),
-                RichEditor::make('body'),
-                Select::make('status')->options(['pending','done','stop'])->disabled(function(){
-                    return auth()->user()->role != 'admin';
-                }),
-
-
+                RichEditor::make('body')->required(),
+                Select::make('category_id')
+                    ->relationship('category', 'name')
+                    ->required(),
+                Select::make('status')
+                    ->options(['pending','done','stop'])
+                    ->default('pending')
+                    ->disabled(function(){
+                        return auth()->user()->role != 'admin';
+                    }),
             ]);
     }
 
@@ -97,5 +103,39 @@ class PostResource extends Resource
                 ]
                 );
 
+    }
+
+    public static function canViewAny(): bool
+    {
+        return true; // All users can view posts
+    }
+
+    public static function canCreate(): bool
+    {
+        return true; // All users can create posts
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        // Users can only edit their own posts, admins can edit all
+        return auth()->user()->role === 'admin' || $record->user_id === auth()->id();
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        // Users can only delete their own posts, admins can edit all
+        return auth()->user()->role === 'admin' || $record->user_id === auth()->id();
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        
+        // If user is not admin, only show their own posts
+        if (auth()->user()->role !== 'admin') {
+            $query->where('user_id', auth()->id());
+        }
+        
+        return $query;
     }
 }

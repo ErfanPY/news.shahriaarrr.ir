@@ -16,4 +16,14 @@ class EditPost extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        // Ensure non-admin users can't change the status
+        if (auth()->user()->role !== 'admin') {
+            unset($data['status']);
+        }
+        
+        return $data;
+    }
 }
