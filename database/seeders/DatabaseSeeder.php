@@ -48,8 +48,13 @@ class DatabaseSeeder extends Seeder
             $uniqueImagePath = 'form-attachments/cat-image-' . $i . '.jpg';
             $uniqueFullPath = public_path($uniqueImagePath);
             
-            echo "Downloading cat image for post " . ($i + 1) . "...\n";
-            file_put_contents($uniqueFullPath, file_get_contents('https://www.placekittens.com/400/400'));
+            // Download only if file doesn't exist
+            if (!file_exists($uniqueFullPath)) {
+                echo "Downloading cat image for post " . ($i + 1) . "...\n";
+                file_put_contents($uniqueFullPath, file_get_contents('https://www.placekittens.com/400/400'));
+            } else {
+                echo "Cat image for post " . ($i + 1) . " already exists, skipping download.\n";
+            }
             
             echo "Creating post " . ($i + 1) . " with image: " . $uniqueImagePath . "\n";
             Post::create([
