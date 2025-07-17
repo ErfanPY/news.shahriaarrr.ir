@@ -44,8 +44,7 @@ class DatabaseSeeder extends Seeder
                 'category_id' => rand(1,5),
                 'user_id' => rand(1,5),
                 'status' => 'done',
-                'url' => 'form-attachments/custom-prefix-20220829_192922.jpg
-'
+                'url' => 'form-attachments/custom-prefix-20220829_192922.jpg'
             ]);
         }
 
