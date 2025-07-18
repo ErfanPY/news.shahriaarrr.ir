@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::post('coment/{id}', [CommentController::class,'store'])->name('comments.store');
 
-Route::get('/my-posts',[PostController::class,'myPosts'])->name('post.index');
+Route::get('/my-posts',[PostController::class,'myPosts'])->name('post.my-posts');
 
 Route::group(['prefix' => '/post'],function(){
     Route::get('/',[PostController::class,'index'])->name('post.index');
