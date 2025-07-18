@@ -28,27 +28,31 @@ class PostResource extends Resource
     protected static ?string $model = Post::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'پست ها';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
+                TextInput::make('name')->required()->label('عنوان'),
                 FileUpload::make('url')->image()
-                ->getUploadedFileNameForStorageUsing(
-                    fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
-                        ->prepend('custom-prefix-'),
-                )
+                    ->label('تصویر')
+                    ->getUploadedFileNameForStorageUsing(
+                        fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
+                            ->prepend('custom-prefix-'),
+                    )
                     ->disk('public')
                     ->directory('form-attachments')
                     ->visibility('public'),
-                RichEditor::make('body')->required(),
+                RichEditor::make('body')->required()->label('متن'),
                 Select::make('category_id')
                     ->relationship('category', 'name')
-                    ->required(),
+                    ->required()
+                    ->label('دسته بندی'),
                 Select::make('status')
-                    ->options(['pending','done','stop'])
+                    ->options(['pending' => 'در انتظار', 'done' => 'تایید شده', 'stop' => 'متوقف'])
                     ->default('pending')
+                    ->label('وضعیت')
                     ->disabled(function(){
                         return auth()->user()->role != 'admin';
                     }),
@@ -59,10 +63,10 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('user.name')->sortable()->searchable(),
-                TextColumn::make('category.name')->sortable()->searchable(),
-                ImageColumn::make('url')
+                TextColumn::make('name')->sortable()->searchable()->label('عنوان'),
+                TextColumn::make('user.name')->sortable()->searchable()->label('نویسنده'),
+                TextColumn::make('category.name')->sortable()->searchable()->label('دسته بندی'),
+                ImageColumn::make('url')->label('تصویر')
             ])
             ->filters([
                 //
@@ -96,6 +100,11 @@ class PostResource extends Resource
     public static function shouldRegisterNavigation(): bool
     {
         return true; // All users can see the Posts resource in navigation
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'پست ها';
     }
 
     public static function canViewAny(): bool

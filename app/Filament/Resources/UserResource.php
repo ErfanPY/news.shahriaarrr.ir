@@ -39,12 +39,11 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-
-
-                TextInput::make('name'),
-                TextInput::make('email'),
+                TextInput::make('name')->label('نام'),
+                TextInput::make('email')->label('ایمیل'),
                 Select::make('role')
-                    ->options(['user','author','admin'])
+                    ->options(['user' => 'کاربر', 'author' => 'نویسنده', 'admin' => 'مدیر'])
+                    ->label('نقش')
                     ->visible(function(){
                         return auth()->user()->role === 'admin';
                     }),
@@ -55,11 +54,9 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('email')->sortable()->searchable(),
-                TextColumn::make('role')->sortable()->searchable(),
-                // TextColumn::make('role'),
+                TextColumn::make('name')->sortable()->searchable()->label('نام'),
+                TextColumn::make('email')->sortable()->searchable()->label('ایمیل'),
+                TextColumn::make('role')->sortable()->searchable()->label('نقش'),
             ])
             ->filters([
                 // Filter::make('email')->form([

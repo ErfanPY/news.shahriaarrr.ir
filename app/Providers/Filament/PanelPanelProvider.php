@@ -40,6 +40,14 @@ class PanelPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
+            ->topNavigation()
+            ->brandName('پنل مدیریت')
+            ->navigationItems([
+                \Filament\Navigation\NavigationItem::make('بازگشت به سایت')
+                    ->url('/', shouldOpenInNewTab: false)
+                    ->icon('heroicon-o-home')
+                    ->sort(1),
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
