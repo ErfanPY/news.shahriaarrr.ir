@@ -46,12 +46,7 @@ class DatabaseSeeder extends Seeder
             Category::create(['name' => $categoryName]);
         }
 
-        $imagePath = 'form-attachments/cat-image.jpg';
-        $fullPath = public_path($imagePath);
-        
-        if (!file_exists(dirname($fullPath))) {
-            mkdir(dirname($fullPath), 0755, true);
-        }
+
         
         // Persian cat-related news titles
         $catNewsTitles = [
@@ -67,10 +62,17 @@ class DatabaseSeeder extends Seeder
             'راهنمای نگهداری از گربه برای مبتدیان'
         ];
         
+        // Check and create directory before the loop
+        $storageDirectory = storage_path('app/public/form-attachments');
+        if (!file_exists($storageDirectory)) {
+            mkdir($storageDirectory, 0755, true);
+        }
+        
         for($i=0;$i<10;$i++){
             $uniqueImagePath = 'form-attachments/cat-image-' . $i . '.jpg';
-            $uniqueFullPath = public_path($uniqueImagePath);
+            $uniqueFullPath = storage_path('app/public/' . $uniqueImagePath);
             
+            // Only download image if it doesn't exist
             if (!file_exists($uniqueFullPath)) {
                 file_put_contents($uniqueFullPath, file_get_contents('https://www.placekittens.com/400/400'));
             }
