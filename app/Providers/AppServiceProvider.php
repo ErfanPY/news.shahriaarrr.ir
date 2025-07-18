@@ -32,5 +32,18 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('jalaliDiff', function ($expression) {
             return "<?php echo \App\Services\JalaliDateService::diffForHumans($expression); ?>";
         });
+
+        // Also register helper functions for backward compatibility
+        if (!function_exists('toJalali')) {
+            function toJalali($date, $format = 'Y/m/d') {
+                return \App\Services\JalaliDateService::toJalali($date, $format);
+            }
+        }
+
+        if (!function_exists('toJalaliDiffForHumans')) {
+            function toJalaliDiffForHumans($date) {
+                return \App\Services\JalaliDateService::diffForHumans($date);
+            }
+        }
     }
 }
