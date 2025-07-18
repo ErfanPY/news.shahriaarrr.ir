@@ -68,7 +68,7 @@ class PostResource extends Resource
                 TextColumn::make('category.name')->sortable()->searchable()->label('دسته بندی'),
                 TextColumn::make('created_at')
                     ->formatStateUsing(function ($state) {
-                        return toJalali($state, 'Y/m/d');
+                        return \App\Services\JalaliDateService::toJalali($state, 'Y/m/d');
                     })
                     ->sortable()
                     ->label('تاریخ'),

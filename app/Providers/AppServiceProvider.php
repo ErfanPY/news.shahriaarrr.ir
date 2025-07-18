@@ -24,17 +24,13 @@ class AppServiceProvider extends ServiceProvider
     {
         // Blade::component('layout', Layout::class);
 
-        // Register global helper functions for Jalali date conversion
-        if (!function_exists('toJalali')) {
-            function toJalali($date, $format = 'Y/m/d') {
-                return JalaliDateService::toJalali($date, $format);
-            }
-        }
+        // Register Blade directives for Jalali date conversion
+        Blade::directive('jalali', function ($expression) {
+            return "<?php echo \App\Services\JalaliDateService::toJalali($expression); ?>";
+        });
 
-        if (!function_exists('toJalaliDiffForHumans')) {
-            function toJalaliDiffForHumans($date) {
-                return JalaliDateService::diffForHumans($date);
-            }
-        }
+        Blade::directive('jalaliDiff', function ($expression) {
+            return "<?php echo \App\Services\JalaliDateService::diffForHumans($expression); ?>";
+        });
     }
 }
