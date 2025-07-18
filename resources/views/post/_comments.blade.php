@@ -24,7 +24,7 @@
                 <img src="{{ asset('icon.png') }}" width="64" class="rounded-circle mr-3" alt="{{ $comment->user->username }}">
             </div>
             <div class="flex-grow-1 ms-3">
-                <h5 class="">{{ $comment->user->username }} <small class="text-muted pl-2">{{ $comment->created_at->diffForHumans() }}</small></h5>
+                <h5 class="">{{ $comment->user->username }} <small class="text-muted pl-2">{{ toJalaliDiffForHumans($comment->created_at) }}</small></h5>
                 <div>
                     {{ $comment->body }}
                 </div>

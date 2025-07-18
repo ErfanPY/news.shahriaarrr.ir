@@ -65,7 +65,9 @@ class CommentResource extends Resource
                     ->limit(50)
                     ->label('متن نظر'),
                 TextColumn::make('created_at')
-                    ->dateTime('Y/m/d H:i')
+                    ->formatStateUsing(function ($state) {
+                        return toJalali($state, 'Y/m/d H:i');
+                    })
                     ->sortable()
                     ->label('تاریخ'),
             ])

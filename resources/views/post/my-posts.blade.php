@@ -8,7 +8,7 @@
             <div class="row">
                 @if($posts->count() > 0)
                     @foreach($posts as $post)
-                        <x-post-card :post="$post" :showDate="true" />
+                        <x-post-card :post="$post"/>
                     @endforeach
                 @else
                     <div class="col-12 text-center">

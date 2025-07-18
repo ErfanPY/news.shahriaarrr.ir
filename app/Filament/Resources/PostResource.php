@@ -66,6 +66,12 @@ class PostResource extends Resource
                 TextColumn::make('name')->sortable()->searchable()->label('عنوان'),
                 TextColumn::make('user.name')->sortable()->searchable()->label('نویسنده'),
                 TextColumn::make('category.name')->sortable()->searchable()->label('دسته بندی'),
+                TextColumn::make('created_at')
+                    ->formatStateUsing(function ($state) {
+                        return toJalali($state, 'Y/m/d');
+                    })
+                    ->sortable()
+                    ->label('تاریخ'),
                 ImageColumn::make('url')->label('تصویر')
             ])
             ->filters([

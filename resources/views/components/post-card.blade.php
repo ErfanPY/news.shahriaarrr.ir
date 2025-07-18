@@ -5,9 +5,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $post->name }}</h5>
                 <p class="card-text text-muted">توضیحات کوتاه خبر</p>
-                @if(isset($showDate) && $showDate)
-                    <small class="text-muted">تاریخ: {{ $post->created_at->format('Y/m/d') }}</small>
-                @endif
+                <small class="text-muted">تاریخ: {{ toJalali($post->created_at) }}</small>
             </div>
         </div>
     </a>
