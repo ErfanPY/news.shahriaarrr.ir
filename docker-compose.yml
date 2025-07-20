@@ -51,3 +51,23 @@ networks:
 volumes:
     sail-redis:
         driver: local
+    sail-mysql:
+        driver: local
+mysql:
+    image: 'mysql:8.0'
+    ports:
+        - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+        MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-password}'
+        MYSQL_DATABASE: '${DB_DATABASE:-laravel}'
+        MYSQL_USER: '${DB_USERNAME:-sail}'
+        MYSQL_PASSWORD: '${DB_PASSWORD:-password}'
+        MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+        - 'sail-mysql:/var/lib/mysql'
+    networks:
+        - sail
+    healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+        retries: 3
+        timeout: 5s
