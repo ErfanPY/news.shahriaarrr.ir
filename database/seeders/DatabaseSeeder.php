@@ -18,13 +18,17 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Category::factory(3)->create();
+
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'role' => 'admin'
+        ]);
 
         Post::factory(50)->create([
             'category_id' => 2,
+            'status' => 'accepted'
         ]);
 
         // Category::factory(3)->create();
