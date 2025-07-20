@@ -16,14 +16,6 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                {{-- Categories --}}
-                @foreach ($categories as $category)
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('category.show', $category->id) }}">
-                        {{ $category->name }}
-                    </a>
-                </li>
-                @endforeach
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">خانه</a>
                 </li>

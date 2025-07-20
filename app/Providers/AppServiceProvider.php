@@ -25,8 +25,5 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
         Paginator::useBootstrapFive();
-
-        $categories = Category::all();
-        View::share('categories', $categories);
     }
 }
