@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,77 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $body =  'متن تستی آزمایشی بسیار طولانی و زیاد برای تست و بررسی نحوه نمایش';
+        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'مدیر سایت',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('12345678'),
-            'role' => 'admin',
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        Post::factory(50)->create([
+            'category_id' => 2,
         ]);
 
-        for($i=0;$i<10;$i++){
-            User::factory()->create([
-            'name' => 'کاربر '.$i,
-            'email' => $i.'user@example.com',
-            'password' => Hash::make('12345678'),
-        ]);
+        // Category::factory(3)->create();
+
+        // Comment::factory(10)->create();
+
         }
-
-        // Create 5 Persian news categories
-        $categories = [
-            'اخبار سیاسی',
-            'اخبار اقتصادی', 
-            'اخبار ورزشی',
-            'اخبار فناوری',
-            'اخبار فرهنگی'
-        ];
-        
-        foreach($categories as $categoryName) {
-            Category::create(['name' => $categoryName]);
-        }
-
-
-        
-        // Persian cat-related news titles
-        $catNewsTitles = [
-            'گربه‌ای که از آتش‌سوزی جان سالم به در برد',
-            'رکورد جدید گربه در پرش ارتفاع',
-            'گربه درمانگر در بیمارستان کودکان',
-            'کشف گونه جدید گربه در جنگل‌های شمال',
-            'گربه‌ای که صاحبش را از سقوط نجات داد',
-            'راه‌اندازی پناهگاه جدید برای گربه‌های بی‌خانمان',
-            'گربه‌ای که ۲۰ سال عمر کرد',
-            'گربه‌های معروف اینستاگرام',
-            'گربه‌ای که پیانو می‌نوازد',
-            'راهنمای نگهداری از گربه برای مبتدیان'
-        ];
-        
-        // Check and create directory before the loop
-        $storageDirectory = storage_path('app/public/form-attachments');
-        if (!file_exists($storageDirectory)) {
-            mkdir($storageDirectory, 0755, true);
-        }
-        
-        for($i=0;$i<10;$i++){
-            $uniqueImagePath = 'form-attachments/cat-image-' . $i . '.jpg';
-            $uniqueFullPath = storage_path('app/public/' . $uniqueImagePath);
-            
-            // Only download image if it doesn't exist
-            if (!file_exists($uniqueFullPath)) {
-                file_put_contents($uniqueFullPath, file_get_contents('https://www.placekittens.com/400/400'));
-            }
-            
-            Post::create([
-                'name' => $catNewsTitles[$i],
-                'body' => $body,
-                'category_id' => rand(1,5),
-                'user_id' => rand(1,5),
-                'status' => 'done',
-                'url' => $uniqueImagePath
-            ]);
-        }
-
-
-    }
 }

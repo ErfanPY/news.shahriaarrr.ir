@@ -7,23 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    /** @use HasFactory<\Database\Factories\CommentFactory> */
     use HasFactory;
 
-    protected $fillable = ['user_id', 'post_id', 'body'];
+    protected $fillable = ['content', 'user_id', 'post_id', 'status'];
 
-    public function image()
+    public function getCreatedAtJalaliAttribute()
+    {
+        return Jalalian::fromDateTime($this->created_at)->format('Y/m/d H:i');
+    }
+
+    public function getUpdatedAtJalaliAttribute()
+    {
+        return Jalalian::fromDateTime($this->updated_at)->format('Y/m/d H:i');
+    }
+
+    public function post()
     {
         return $this->belongsTo(Post::class);
     }
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
 
-    public function scopeForUser($query, User $user){
-        // Image::whereBelongsTo($user) => where('user_id', $user->id)
-        return $query->whereIn('image_id', Post::whereBelongsTo($user)->pluck('id'));
-    }
-    public function scopeApproved($query){
-        return $query->where('approved', true);
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

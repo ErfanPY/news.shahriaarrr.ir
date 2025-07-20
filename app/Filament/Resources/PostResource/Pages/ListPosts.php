@@ -16,16 +16,4 @@ class ListPosts extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-
-    protected function getTableQuery(): ?\Illuminate\Database\Eloquent\Builder
-    {
-        $query = parent::getTableQuery();
-        
-        // If user is not admin, only show their own posts
-        if (auth()->user()->role !== 'admin') {
-            $query->where('user_id', auth()->id());
-        }
-        
-        return $query;
-    }
 }

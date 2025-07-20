@@ -2,46 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateCommentRequest;
 use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class CommentController extends Controller
 {
-    //
-    public function __construct()
+    public function index()
     {
-        $this->middleware(['auth']);
+        $user = auth()->user();
+
+        $comments = $user->comments;
+
+        return view('dashboard.comment.comments', compact('comments'));
     }
 
-
-
-    public function update(Comment $comment, Request $request) :RedirectResponse
+    public function edit(Comment $comment)
     {
-        $comment->approved = $request->approve;
-        $comment->update();
-
-        $message = "Comment has been " . ($request->approve ? "approved" : "unapproved");
-        return back()->with('message', $message);
+        return view('dashboard.comment.edit-comment', compact('comment'));
     }
 
-    public function store($postID, Request $request) :RedirectResponse
+    public function update(Request $request, Comment $comment)
     {
-        $post = Post::find($postID);
-        $post->comments()->create([
-            'body' =>$request->body,
-            'user_id' => auth()->user()->id,
-            'post_id' => $post->id
+        $validated = $request->validate([
+            'content' => 'sometimes',
         ]);
 
-        return back();
+        $comment->update($validated);
+
+        return redirect(route('dashboard.comments'))->with('success', 'با موفقیت ویرایش شد!');
     }
 
-    public function destroy(Comment $comment){
+    public function store(Request $request, Post $post)
+    {
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'content' => 'required',
+        ]);
+
+        $validated['post_id'] = $post;
+
+        $user->comments()->create($validated);
+
+        return redirect(route('post.show', $post))->with('success', 'با موفقیت درج شد!');
+    }
+
+    public function delete(Comment $comment)
+    {
         $comment->delete();
-        return back()->with('message', "Comment has been removed!");
+
+        return redirect(route('dashboard.comments'))->with('success', 'با موفقیت حذف شد!');
     }
 }

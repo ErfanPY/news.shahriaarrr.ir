@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Services\JalaliDateService;
-use App\View\Components\Layout;
-use Illuminate\Support\Facades\Blade;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,28 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Blade::component('layout', Layout::class);
+        Model::unguard();
+        Paginator::useBootstrapFive();
 
-        // Register Blade directives for Jalali date conversion
-        Blade::directive('jalali', function ($expression) {
-            return "<?php echo \App\Services\JalaliDateService::toJalali($expression); ?>";
-        });
-
-        Blade::directive('jalaliDiff', function ($expression) {
-            return "<?php echo \App\Services\JalaliDateService::diffForHumans($expression); ?>";
-        });
-
-        // Also register helper functions for backward compatibility
-        if (!function_exists('toJalali')) {
-            function toJalali($date, $format = 'Y/m/d') {
-                return \App\Services\JalaliDateService::toJalali($date, $format);
-            }
-        }
-
-        if (!function_exists('toJalaliDiffForHumans')) {
-            function toJalaliDiffForHumans($date) {
-                return \App\Services\JalaliDateService::diffForHumans($date);
-            }
-        }
+        $categories = Category::all();
+        View::share('categories', $categories);
     }
 }

@@ -16,14 +16,4 @@ class EditUser extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        // Ensure non-admin users can't change their role
-        if (auth()->user()->role !== 'admin') {
-            unset($data['role']);
-        }
-        
-        return $data;
-    }
 }
