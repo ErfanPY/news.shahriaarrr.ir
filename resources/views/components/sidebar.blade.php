@@ -2,9 +2,9 @@
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <span class="fs-4">News</span>
     </a>
-    
+
     <hr>
-    
+
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
             <a href="/dashboard" class="nav-link text-white" aria-current="page">
@@ -13,6 +13,12 @@
             </a>
         </li>
         @if(auth()->user()->role != 'user')
+        <li>
+            <a href="/admin" class="nav-link text-white">
+                <i class="bi bi-gear me-2"></i>
+                پنل مدیریت
+            </a>
+        </li>
         <li>
             <a href={{ route('dashboard.posts') }} class="nav-link text-white">
                 <i class="bi bi-speedometer2 me-2"></i>
@@ -25,12 +31,12 @@
                 کامنت های پست ها
             </a>
         </li>
+        @endif
         <li>
             <a href={{ route('dashboard.comments') }} class="nav-link text-white">
                 <i class="bi bi-gear me-2"></i>
                 کامنت های شما
             </a>
         </li>
-        @endif
     </ul>
 </div>

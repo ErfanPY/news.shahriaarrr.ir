@@ -41,7 +41,7 @@ class CommentController extends Controller
             'content' => 'required',
         ]);
 
-        $validated['post_id'] = $post;
+        $validated['post_id'] = $post->id;
 
         $user->comments()->create($validated);
 

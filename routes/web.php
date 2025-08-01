@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $categories = Category::all();
     $uncategorized = Post::where('category_id', null)->where('status', 'accepted')->limit(4)->get();
-    
+
     $slider_posts = Post::limit(4)->get();
 
     $posts = [];
@@ -62,6 +62,16 @@ Route::middleware([Auth::class])->prefix('dashboard')->group(function() {
 
     Route::post('comment/{post}', [CommentController::class, 'store']);
 
+    Route::get('/comments', [CommentController::class, 'index'])->name('dashboard.comments');
+
+    Route::get('/comment/{comment}', [CommentController::class, 'edit'])->name('dashboard.edit-comment');
+
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('dashboard.comments.update');
+
+    Route::delete('/comments/{comment}', [CommentController::class, 'delete'])->name('dashboard.comments.delete');
+
+    Route::post('/comments', [CommentController::class, 'store'])->name('dashboard.comments.store');
+
     Route::middleware([Author::class])->group(function() {
         Route::get('/posts/comments', [PostCommentController::class, 'index'])->name('dashboard.author.comments');
 
@@ -81,19 +91,6 @@ Route::middleware([Auth::class])->prefix('dashboard')->group(function() {
         Route::put('/posts/{post}', [PostController::class, 'update'])->name('dashboard.posts.update');
 
         Route::delete('/posts/{post}', [PostController::class, 'delete'])->name('dashboard.posts.delete');
-
-
-
-        
-        Route::get('/comments', [CommentController::class, 'index'])->name('dashboard.comments');
-
-        Route::get('/comment/{comment}', [CommentController::class, 'edit'])->name('dashboard.edit-comment');
-
-        Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('dashboard.comments.update');
-
-        Route::delete('/comments/{comment}', [CommentController::class, 'delete'])->name('dashboard.comments.delete');
-        
-        Route::post('/comments', [CommentController::class, 'store'])->name('dashboard.comments.store');
 
     });
 });
